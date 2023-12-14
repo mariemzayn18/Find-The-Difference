@@ -1,0 +1,16 @@
+img {
+  border-radius: 50%;
+  width: 100px;
+  height: auto;
+  position: absolute;
+}
+
+button {
+  background: transparent;
+  border: none;
+}
+
+#leftGrid,
+#rightGrid {
+  position: relative;
+}
