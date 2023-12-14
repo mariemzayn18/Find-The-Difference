@@ -7,7 +7,7 @@ const rightGrid = document.getElementById("rightGrid");
 const leftRect = leftGrid.getBoundingClientRect();
 const rightRect = rightGrid.getBoundingClientRect();
 
-leftGrid.style.height = window.outerHeight + "px";
+const gridsRow = document.getElementById("grids");
 
 // Create our images
 const buttonImage = document.createElement("button");
@@ -16,8 +16,18 @@ img.src = "assets/img.png";
 
 // get Random positions in the grid
 function getRandomPositions(grid) {
-  const randomX = Math.floor(Math.random() * (grid.clientWidth - 85));
-  const randomY = Math.floor(Math.random() * window.innerHeight);
+  let imgWidth = 100,
+    imgHeight = 100;
+
+  if (window.innerWidth < 650) {
+    imgWidth = 50;
+    imgHeight = 50;
+  }
+
+  const randomX = Math.floor(Math.random() * (grid.clientWidth - imgWidth));
+  const randomY = Math.floor(
+    Math.random() * (gridsRow.offsetHeight - imgWidth)
+  );
   return [randomX, randomY];
 }
 

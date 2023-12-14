@@ -1,8 +1,13 @@
 img {
-  border-radius: 50%;
   width: 100px;
   height: auto;
   position: absolute;
+}
+
+@media screen and (max-width: 650px) {
+  img {
+    width: 50px;
+  }
 }
 
 button {
@@ -10,11 +15,22 @@ button {
   border: none;
 }
 
-#leftGrid,
-#rightGrid {
-  position: relative;
+h1 {
+  color: #4d4d4d;
+  font-family: "Oswald", sans-serif;
+}
+
+body {
+  background-color: rgba(245, 162, 162, 0.2);
 }
 
 .grids {
   height: 80vh;
+}
+
+#leftGrid,
+#rightGrid {
+  position: relative;
+  height: 100%;
+  background-color: rgba(245, 162, 162, 0.1);
 }
