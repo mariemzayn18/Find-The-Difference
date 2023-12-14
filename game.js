@@ -1,5 +1,5 @@
 let level = 1; // numberOfImagesPerGrid
-const maxLevels = 10;
+const maxLevels = 15;
 
 // Define our grids
 const leftGrid = document.getElementById("leftGrid");
@@ -21,6 +21,31 @@ function getRandomPositions(grid) {
   return [randomX, randomY];
 }
 
+// Check overlapping images
+// function checkOverlappingImages(randomX, randomY) {
+//   const images = document.querySelectorAll("img");
+//   let overlapping = false;
+
+//   images.forEach((image) => {
+//     const imageRect = image.getBoundingClientRect();
+//     const imageLeft = imageRect.left;
+//     const imageRight = imageRect.right;
+//     const imageTop = imageRect.top;
+//     const imageBottom = imageRect.bottom;
+
+//     if (
+//       randomX + img.width > imageLeft &&
+//       randomX < imageRight &&
+//       randomY + img.height > imageTop &&
+//       randomY < imageBottom
+//     ) {
+//       overlapping = true;
+//     }
+//   });
+
+//   return overlapping;
+// }
+
 // place images in the grid
 function placeImage(grid, randomX, randomY, index) {
   const newButtonImage = buttonImage.cloneNode(true);
@@ -32,7 +57,7 @@ function placeImage(grid, randomX, randomY, index) {
   grid.appendChild(newButtonImage);
 }
 
-// Choose the different image
+// Game Logic
 function handleImageClick(img) {
   console.log(img.target.id);
   const id = img.target.id;
@@ -62,6 +87,17 @@ function generateGrids(level) {
     let randomXRight =
       randomX + leftRect.left + leftRect.width - rightRect.left;
 
+    // const existingImages = new Set();
+    // do {
+    //   [randomX, randomY] = getRandomPositions(leftGrid);
+    //   randomXRight = randomX + leftRect.left + leftRect.width - rightRect.left;
+    // } while (
+    //   !checkOverlappingImages(randomX, randomY) ||
+    //   existingImages.has(randomX + "," + randomY)
+    // );
+
+    // existingImages.add(randomX + "," + randomY);
+
     // For the Left image
     placeImage(leftGrid, randomX, randomY, i);
 
@@ -70,7 +106,11 @@ function generateGrids(level) {
   }
 
   // Extra Image
-  let [randomXExtraImg, randomYExtraImg] = getRandomPositions(rightGrid);
+  let [randomXExtraImg, randomYExtraImg] = getRandomPositions(leftGrid);
+  //   do {
+  //     [randomXExtraImg, randomYExtraImg] = getRandomPositions(leftGrid);
+  //   } while (!checkOverlappingImages(randomXExtraImg, randomYExtraImg) || existingImages.has(randomXExtraImg + "," + randomYExtraImg));
+
   placeImage(rightGrid, randomXExtraImg, randomYExtraImg, level * 2);
 
   // Add click event listeners to images
@@ -83,4 +123,3 @@ function generateGrids(level) {
 // Start the game
 document.getElementById("level").innerHTML = "Level: " + level;
 generateGrids(level);
-
