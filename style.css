@@ -14,3 +14,7 @@ button {
 #rightGrid {
   position: relative;
 }
+
+.grids {
+  height: 80vh;
+}

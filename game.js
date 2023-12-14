@@ -16,35 +16,10 @@ img.src = "assets/img.png";
 
 // get Random positions in the grid
 function getRandomPositions(grid) {
-  const randomX = Math.floor(Math.random() * (grid.clientWidth - img.width));
+  const randomX = Math.floor(Math.random() * (grid.clientWidth - 85));
   const randomY = Math.floor(Math.random() * window.innerHeight);
   return [randomX, randomY];
 }
-
-// Check overlapping images
-// function checkOverlappingImages(randomX, randomY) {
-//   const images = document.querySelectorAll("img");
-//   let overlapping = false;
-
-//   images.forEach((image) => {
-//     const imageRect = image.getBoundingClientRect();
-//     const imageLeft = imageRect.left;
-//     const imageRight = imageRect.right;
-//     const imageTop = imageRect.top;
-//     const imageBottom = imageRect.bottom;
-
-//     if (
-//       randomX + img.width > imageLeft &&
-//       randomX < imageRight &&
-//       randomY + img.height > imageTop &&
-//       randomY < imageBottom
-//     ) {
-//       overlapping = true;
-//     }
-//   });
-
-//   return overlapping;
-// }
 
 // place images in the grid
 function placeImage(grid, randomX, randomY, index) {
@@ -67,7 +42,7 @@ function handleImageClick(img) {
     if (level > maxLevels) {
       alert("CONGRATULATIONS!, You Won the Game!");
     } else {
-      document.getElementById("level").innerHTML = "Level: " + level;
+      document.getElementById("level").innerHTML = "Level " + level;
       generateGrids(level);
     }
   } else {
@@ -85,18 +60,7 @@ function generateGrids(level) {
     // Get random positions
     let [randomX, randomY] = getRandomPositions(leftGrid);
     let randomXRight =
-      randomX + leftRect.left + leftRect.width - rightRect.left;
-
-    // const existingImages = new Set();
-    // do {
-    //   [randomX, randomY] = getRandomPositions(leftGrid);
-    //   randomXRight = randomX + leftRect.left + leftRect.width - rightRect.left;
-    // } while (
-    //   !checkOverlappingImages(randomX, randomY) ||
-    //   existingImages.has(randomX + "," + randomY)
-    // );
-
-    // existingImages.add(randomX + "," + randomY);
+      randomX + leftRect.left + leftRect.width - rightRect.left + 10;
 
     // For the Left image
     placeImage(leftGrid, randomX, randomY, i);
@@ -107,10 +71,6 @@ function generateGrids(level) {
 
   // Extra Image
   let [randomXExtraImg, randomYExtraImg] = getRandomPositions(leftGrid);
-  //   do {
-  //     [randomXExtraImg, randomYExtraImg] = getRandomPositions(leftGrid);
-  //   } while (!checkOverlappingImages(randomXExtraImg, randomYExtraImg) || existingImages.has(randomXExtraImg + "," + randomYExtraImg));
-
   placeImage(rightGrid, randomXExtraImg, randomYExtraImg, level * 2);
 
   // Add click event listeners to images
@@ -121,5 +81,5 @@ function generateGrids(level) {
 }
 
 // Start the game
-document.getElementById("level").innerHTML = "Level: " + level;
+document.getElementById("level").innerHTML = "Level " + level;
 generateGrids(level);
