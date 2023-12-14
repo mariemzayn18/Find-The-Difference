@@ -4,8 +4,8 @@ const maxLevels = 15;
 // Define our grids
 const leftGrid = document.getElementById("leftGrid");
 const rightGrid = document.getElementById("rightGrid");
-const leftRect = leftGrid.getBoundingClientRect();
-const rightRect = rightGrid.getBoundingClientRect();
+let leftRect = leftGrid.getBoundingClientRect();
+let rightRect = rightGrid.getBoundingClientRect();
 
 const gridsRow = document.getElementById("grids");
 
@@ -89,6 +89,13 @@ function generateGrids(level) {
     image.addEventListener("click", handleImageClick);
   });
 }
+
+// Update images' positions on window resize
+window.addEventListener("resize", () => {
+  leftRect = leftGrid.getBoundingClientRect();
+  rightRect = rightGrid.getBoundingClientRect();
+  generateGrids(level);
+});
 
 // Start the game
 document.getElementById("level").innerHTML = "Level " + level;
