@@ -4,9 +4,6 @@ const maxLevels = 15;
 // Define our grids
 const leftGrid = document.getElementById("leftGrid");
 const rightGrid = document.getElementById("rightGrid");
-let leftRect = leftGrid.getBoundingClientRect();
-let rightRect = rightGrid.getBoundingClientRect();
-
 const gridsRow = document.getElementById("grids");
 
 // Create our images
@@ -15,15 +12,11 @@ const img = document.createElement("img");
 img.src = "assets/img.png";
 
 // get Random positions in the grid
-function getRandomPositions(grid) {
-  let imgWidth = 100,
-    imgHeight = 100;
-
+function getRandomPositions(grid = leftGrid) {
+  let imgWidth = 100;
   if (window.innerWidth < 650) {
     imgWidth = 50;
-    imgHeight = 50;
   }
-
   const randomX = Math.floor(Math.random() * (grid.clientWidth - imgWidth));
   const randomY = Math.floor(
     Math.random() * (gridsRow.offsetHeight - imgWidth)
@@ -44,7 +37,6 @@ function placeImage(grid, randomX, randomY, index) {
 
 // Game Logic
 function handleImageClick(img) {
-  console.log(img.target.id);
   const id = img.target.id;
   if (id == level * 2) {
     alert("You Won, Continue to the Next Level!");
@@ -62,25 +54,23 @@ function handleImageClick(img) {
 
 // Generate the grids
 function generateGrids(level) {
-  // Clear the grids
+  // Clear the grids for a new level
   leftGrid.innerHTML = "";
   rightGrid.innerHTML = "";
 
   for (let i = 0; i < level; i++) {
     // Get random positions
-    let [randomX, randomY] = getRandomPositions(leftGrid);
-    let randomXRight =
-      randomX + leftRect.left + leftRect.width - rightRect.left + 10;
+    let [randomX, randomY] = getRandomPositions();
 
-    // For the Left image
+    // For the Left grid
     placeImage(leftGrid, randomX, randomY, i);
 
-    // For the Right image
-    placeImage(rightGrid, randomXRight, randomY, i + level);
+    // For the Right grid
+    placeImage(rightGrid, randomX, randomY, i + level);
   }
 
-  // Extra Image
-  let [randomXExtraImg, randomYExtraImg] = getRandomPositions(leftGrid);
+  // Extra Image to the Right grid
+  let [randomXExtraImg, randomYExtraImg] = getRandomPositions();
   placeImage(rightGrid, randomXExtraImg, randomYExtraImg, level * 2);
 
   // Add click event listeners to images
@@ -92,8 +82,6 @@ function generateGrids(level) {
 
 // Update images' positions on window resize
 window.addEventListener("resize", () => {
-  leftRect = leftGrid.getBoundingClientRect();
-  rightRect = rightGrid.getBoundingClientRect();
   generateGrids(level);
 });
 
